@@ -43,7 +43,7 @@
 							<dl class="local_variables">
 								{% for var in record.local_variables %}
 									<dt>{{ var.0|escape }}</dt>
-									<dd>{{ var.1|pprint|escape }}</dd>
+									<dd><pre>{{ var.1|pprint|escape }}</pre></dd>
 								{% endfor %}
 							</dl>
 						</div>
@@ -262,7 +262,12 @@ var DjangoLogging = function() {
 				td.className = 'trace';
 				link.innerHTML = '&#x25bc;' + link.innerHTML.substring(1)
 			}
-			(window.event || e).returnValue = false;
+			var better_e = (window.event || e);
+			better_e.returnValue = false;
+			if ( better_e.preventDefault ) {
+				e.preventDefault();
+			}
+			return false;
 		});
 	}
 
